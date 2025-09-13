@@ -36,6 +36,10 @@
                                     <pattern>io.github.revxrsal.lamp</pattern>
                                     <shadedPattern>com.notpatch.nlib.libs.lamp</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>fr.mrmicky.fastinv</pattern>
+                                    <shadedPattern>com.notpatch.nlib.libs.fastinv</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
@@ -112,6 +116,11 @@
             <artifactId>packetevents-spigot</artifactId>
             <version>2.9.5</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.mrmicky</groupId>
+            <artifactId>FastInv</artifactId>
+            <version>3.1.1</version>
         </dependency>
     </dependencies>
 
