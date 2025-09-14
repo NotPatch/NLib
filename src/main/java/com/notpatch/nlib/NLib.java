@@ -1,6 +1,8 @@
 package com.notpatch.nlib;
 
+import com.notpatch.nlib.manager.CooldownManager;
 import com.notpatch.nlib.util.NLogger;
+import fr.mrmicky.fastinv.FastInvManager;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,6 +17,9 @@ public class NLib {
 
     private boolean initialized = false;
 
+    @Getter
+    private static CooldownManager cooldownManager;
+
     private NLib() {}
 
     public static NLib initialize(JavaPlugin plugin) {
@@ -24,6 +29,10 @@ public class NLib {
         instance.pluginName = plugin.getName();
         instance.initialized = true;
         instance.plugin = plugin;
+
+        cooldownManager = CooldownManager.getInstance();
+
+        FastInvManager.register(plugin);
 
         NLogger.info("NLib initialized.");
 
