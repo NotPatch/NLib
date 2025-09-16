@@ -6,7 +6,7 @@
 
     <groupId>com.notpatch.nlib</groupId>
     <artifactId>NLib</artifactId>
-    <version>1.3</version>
+    <version>1.3.1</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -27,13 +27,14 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
                                     <pattern>com.github.benmanes.caffeine</pattern>
                                     <shadedPattern>com.notpatch.nlib.libs.caffeine</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>io.github.revxrsal.lamp</pattern>
+                                    <pattern>revxrsal</pattern>
                                     <shadedPattern>com.notpatch.nlib.libs.lamp</shadedPattern>
                                 </relocation>
                                 <relocation>
@@ -41,6 +42,16 @@
                                     <shadedPattern>com.notpatch.nlib.libs.fastinv</shadedPattern>
                                 </relocation>
                             </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
