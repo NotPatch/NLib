@@ -20,39 +20,37 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.0</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.github.benmanes.caffeine</pattern>
+                            <shadedPattern>com.notpatch.nlib.libs.caffeine</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>revxrsal</pattern>
+                            <shadedPattern>com.notpatch.nlib.libs.lamp</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>fr.mrmicky.fastinv</pattern>
+                            <shadedPattern>com.notpatch.nlib.libs.fastinv</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <artifactSet>
+                        <includes>
+                            <include>com.github.ben-manes.caffeine:caffeine</include>
+                            <include>io.github.revxrsal:lamp.common</include>
+                            <include>io.github.revxrsal:lamp.bukkit</include>
+                            <include>fr.mrmicky:FastInv</include>
+                        </includes>
+                    </artifactSet>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <relocations>
-                                <relocation>
-                                    <pattern>com.github.benmanes.caffeine</pattern>
-                                    <shadedPattern>com.notpatch.nlib.libs.caffeine</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>revxrsal</pattern>
-                                    <shadedPattern>com.notpatch.nlib.libs.lamp</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>fr.mrmicky.fastinv</pattern>
-                                    <shadedPattern>com.notpatch.nlib.libs.fastinv</shadedPattern>
-                                </relocation>
-                            </relocations>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
