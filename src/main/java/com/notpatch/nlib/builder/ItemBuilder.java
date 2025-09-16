@@ -1,5 +1,6 @@
 package com.notpatch.nlib.builder;
 
+import com.notpatch.nlib.util.ColorUtil;
 import lombok.Builder;
 
 import lombok.Builder;
@@ -105,8 +106,8 @@ public class ItemBuilder {
         ItemBuilder builder = new ItemBuilder();
         builder.material = Material.getMaterial(section.getString("material", "BARRIER").toUpperCase());
         builder.amount = section.getInt("amount", 1);
-        builder.displayName = section.getString("name", null);
-        builder.lore = section.getStringList("lore");
+        builder.displayName = ColorUtil.hexColor(section.getString("name", null));
+        builder.lore = ColorUtil.getColoredList(section.getStringList("lore"));
         builder.unbreakable = section.getBoolean("unbreakable", false);
         builder.customModelData = section.getInt("custom-model-data", 0);
         builder.glow = section.getBoolean("glow", false);
