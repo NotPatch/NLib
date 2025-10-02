@@ -10,6 +10,7 @@ public class VersionCheck implements CompatibilityCheck {
     private final String minVersion;
     private final String maxVersion;
     private final List<String> supportedVersions;
+    private Runnable onSuccessAction;
 
     public VersionCheck(String minVersion, String maxVersion) {
         this.minVersion = minVersion;
@@ -58,6 +59,16 @@ public class VersionCheck implements CompatibilityCheck {
         }
     }
 
+    @Override
+    public void setOnSuccessAction(Runnable action) {
+        this.onSuccessAction = action;
+    }
+
+    @Override
+    public Runnable getOnSuccessAction() {
+        return this.onSuccessAction;
+    }
+
     private boolean isVersionInRange(String version, String min, String max) {
         return compareVersions(version, min) >= 0 && compareVersions(version, max) <= 0;
     }
@@ -79,4 +90,6 @@ public class VersionCheck implements CompatibilityCheck {
 
         return 0;
     }
+
+
 }

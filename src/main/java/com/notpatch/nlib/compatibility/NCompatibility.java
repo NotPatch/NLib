@@ -18,26 +18,44 @@ import java.util.List;
 public class NCompatibility {
 
     private final List<CompatibilityCheck> checks = new ArrayList<>();
+    private CompatibilityCheck lastCheck = null;
     private boolean hasErrors = false;
     private boolean hasWarnings = false;
 
     public NCompatibility checkVersion(@NonNull String minVersion, @NonNull String maxVersion) {
-        checks.add(new VersionCheck(minVersion, maxVersion));
+        VersionCheck check = new VersionCheck(minVersion, maxVersion);
+        checks.add(check);
+        lastCheck = check;
         return this;
     }
 
     public NCompatibility checkVersion(@NonNull String... supportedVersions) {
-        checks.add(new VersionCheck(Arrays.asList(supportedVersions)));
+        VersionCheck check = new VersionCheck(Arrays.asList(supportedVersions));
+        checks.add(check);
+        lastCheck = check;
         return this;
     }
 
     public NCompatibility checkPlugin(@NonNull String pluginName, boolean required) {
-        checks.add(new PluginCheck(pluginName, required));
+        PluginCheck check = new PluginCheck(pluginName, required);
+        checks.add(check);
+        lastCheck = check;
         return this;
     }
 
     public NCompatibility checkBukkit(@NonNull String... supportedImplementations) {
-        checks.add(new BukkitCheck(Arrays.asList(supportedImplementations)));
+        BukkitCheck check = new BukkitCheck(Arrays.asList(supportedImplementations));
+        checks.add(check);
+        lastCheck = check;
+        return this;
+    }
+
+    public NCompatibility onSuccess(Runnable action){
+        if(lastCheck != null){
+            lastCheck.setOnSuccessAction(action);
+        }else{
+            NLogger.warn("No last check to set onSuccess action for!");
+        }
         return this;
     }
 
@@ -52,6 +70,13 @@ public class NCompatibility {
             switch (result.getStatus()) {
                 case PASS:
                     NLogger.info("§a✓ " + result.getMessage());
+                    if (check.getOnSuccessAction() != null) {
+                        try {
+                            check.getOnSuccessAction().run();
+                        } catch (Exception e) {
+                            NLogger.error("Error executing onSuccess action for check: " + e.getMessage());
+                        }
+                    }
                     break;
                 case WARNING:
                     hasWarnings = true;

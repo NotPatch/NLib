@@ -10,6 +10,7 @@ import org.bukkit.plugin.Plugin;
 public class PluginCheck implements CompatibilityCheck {
     private final String pluginName;
     private final boolean required;
+    private Runnable onSuccessAction;
 
     public PluginCheck(String pluginName, boolean required) {
         this.pluginName = pluginName;
@@ -38,4 +39,15 @@ public class PluginCheck implements CompatibilityCheck {
                             (required ? " (REQUIRED)" : " (Optional)"));
         }
     }
+
+    @Override
+    public void setOnSuccessAction(Runnable action) {
+        this.onSuccessAction = action;
+    }
+
+    @Override
+    public Runnable getOnSuccessAction() {
+        return this.onSuccessAction;
+    }
+
 }

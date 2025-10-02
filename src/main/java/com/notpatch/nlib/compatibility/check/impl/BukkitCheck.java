@@ -9,6 +9,7 @@ import java.util.List;
 
 public class BukkitCheck implements CompatibilityCheck {
     private final List<String> supportedImplementations;
+    private Runnable onSuccessAction;
 
     public BukkitCheck(List<String> supportedImplementations) {
         this.supportedImplementations = supportedImplementations;
@@ -30,5 +31,15 @@ public class BukkitCheck implements CompatibilityCheck {
                     "Server implementation '" + Bukkit.getName() + "' is untested. " +
                             "Supported: " + String.join(", ", supportedImplementations));
         }
+    }
+
+    @Override
+    public void setOnSuccessAction(Runnable action) {
+        this.onSuccessAction = action;
+    }
+
+    @Override
+    public Runnable getOnSuccessAction() {
+        return this.onSuccessAction;
     }
 }
