@@ -14,10 +14,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 @Builder
@@ -99,6 +96,22 @@ public class ItemBuilder {
             this.itemFlags = new ArrayList<>();
         }
         this.itemFlags.add(flag);
+        return this;
+    }
+
+    public ItemBuilder lore(String... lines) {
+        if (this.lore == null) {
+            this.lore = new ArrayList<>();
+        }
+        Collections.addAll(this.lore, lines);
+        return this;
+    }
+
+    public ItemBuilder flags(ItemFlag... flags) {
+        if (this.itemFlags == null) {
+            this.itemFlags = new ArrayList<>();
+        }
+        Collections.addAll(this.itemFlags, flags);
         return this;
     }
 
