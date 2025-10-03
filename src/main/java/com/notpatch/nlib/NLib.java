@@ -1,5 +1,6 @@
 package com.notpatch.nlib;
 
+import com.notpatch.nlib.listener.PlayerMoveListener;
 import com.notpatch.nlib.manager.CooldownManager;
 import com.notpatch.nlib.util.NLogger;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
@@ -35,18 +36,18 @@ public class NLib {
         if (instance == null) {
             instance = new NLib();
         }
+
         instance.pluginName = plugin.getName();
         instance.initialized = true;
         instance.plugin = plugin;
 
         cooldownManager = CooldownManager.getInstance();
 
-        FastInvManager.register(plugin);
-
         commandManager = BukkitCommandManager.create(plugin);
 
         NLogger.info("NLib initialized.");
 
+        plugin.getServer().getPluginManager().registerEvents(new PlayerMoveListener(), plugin);
 
         return instance;
     }
