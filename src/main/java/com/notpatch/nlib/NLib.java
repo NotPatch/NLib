@@ -1,12 +1,10 @@
 package com.notpatch.nlib;
 
+import com.notpatch.nlib.fastinv.FastInvManager;
 import com.notpatch.nlib.listener.PlayerMoveListener;
 import com.notpatch.nlib.manager.CooldownManager;
 import com.notpatch.nlib.util.NLogger;
-import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
-import fr.mrmicky.fastinv.FastInvManager;
 import lombok.Getter;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class NLib {
@@ -23,9 +21,6 @@ public class NLib {
     @Getter
     private static CooldownManager cooldownManager;
 
-    @Getter
-    private static BukkitCommandManager<CommandSender> commandManager;
-
     private NLib() {}
 
     public static NLib initialize(JavaPlugin plugin) {
@@ -41,9 +36,9 @@ public class NLib {
         instance.initialized = true;
         instance.plugin = plugin;
 
-        cooldownManager = CooldownManager.getInstance();
+        FastInvManager.register(plugin);
 
-        commandManager = BukkitCommandManager.create(plugin);
+        cooldownManager = CooldownManager.getInstance();
 
         NLogger.info("NLib initialized.");
 
