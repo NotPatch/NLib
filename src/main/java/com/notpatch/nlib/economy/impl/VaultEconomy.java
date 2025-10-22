@@ -24,21 +24,23 @@ public class VaultEconomy implements Economy {
         economy = rsp.getProvider();
     }
 
-    @Override
     public double withdraw(OfflinePlayer player, double price) {
-        if(this.economy == null){
+        if (economy != null) {
+            economy.withdraw(player, price);
             return price;
         }
-        return 0;
+        return 0.0;
     }
 
-    @Override
     public double deposit(OfflinePlayer player, double price) {
-        return 0;
+        if (economy != null) {
+            economy.deposit(player, price);
+            return price;
+        }
+        return 0.0;
     }
 
-    @Override
     public double getBalance(OfflinePlayer player) {
-        return 0;
+        return economy != null ? economy.getBalance(player) : 0.0;
     }
 }
