@@ -1,11 +1,11 @@
 package com.notpatch.nlib.economy.impl;
 
 import com.notpatch.nlib.NLib;
-import com.notpatch.nlib.economy.Economy;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public class VaultEconomy implements Economy {
+public class VaultEconomy implements com.notpatch.nlib.economy.Economy {
 
     private Economy economy = null;
 
@@ -17,29 +17,32 @@ public class VaultEconomy implements Economy {
         if (NLib.getInstance().getPlugin().getServer().getPluginManager().getPlugin("Vault") == null) {
             return;
         }
-        RegisteredServiceProvider<Economy> rsp = NLib.getInstance().getPlugin().getServer().getServicesManager().getRegistration(Economy.class);
+        RegisteredServiceProvider<net.milkbowl.vault.economy.Economy> rsp = NLib.getInstance().getPlugin().getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (rsp == null) {
             return;
         }
         economy = rsp.getProvider();
     }
 
+    @Override
     public double withdraw(OfflinePlayer player, double price) {
         if (economy != null) {
-            economy.withdraw(player, price);
+            economy.withdrawPlayer(player, price);
             return price;
         }
         return 0.0;
     }
 
+    @Override
     public double deposit(OfflinePlayer player, double price) {
         if (economy != null) {
-            economy.deposit(player, price);
+            economy.depositPlayer(player, price);
             return price;
         }
         return 0.0;
     }
 
+    @Override
     public double getBalance(OfflinePlayer player) {
         return economy != null ? economy.getBalance(player) : 0.0;
     }
