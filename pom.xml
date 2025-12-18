@@ -6,7 +6,7 @@
 
     <groupId>com.notpatch.nlib</groupId>
     <artifactId>NLib</artifactId>
-    <version>1.4.3</version>
+    <version>1.4.5</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,11 +21,35 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <createDependencyReducedPom>true</createDependencyReducedPom>
+                    <minimizeJar>true</minimizeJar>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/LICENSE</exclude>
+                                <exclude>META-INF/LICENSE.txt</exclude>
+                                <exclude>META-INF/NOTICE</exclude>
+                                <exclude>META-INF/NOTICE.txt</exclude>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                                <exclude>module-info.class</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                     <relocations>
                         <relocation>
                             <pattern>com.github.benmanes.caffeine</pattern>
                             <shadedPattern>com.notpatch.nlib.libs.caffeine</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>space.arim.morepaperlib</pattern>
+                            <shadedPattern>com.notpatch.nlib.libs.morepaperlib</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.jspecify</pattern>
+                            <shadedPattern>com.notpatch.nlib.libs.jspecify</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -86,6 +110,7 @@
             <artifactId>caffeine</artifactId>
             <version>3.2.1</version>
             <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
@@ -109,6 +134,7 @@
             <groupId>space.arim.morepaperlib</groupId>
             <artifactId>morepaperlib</artifactId>
             <version>0.4.3</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
