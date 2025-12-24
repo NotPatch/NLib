@@ -6,6 +6,7 @@ import com.notpatch.nlib.manager.CooldownManager;
 import com.notpatch.nlib.util.NLogger;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
+import space.arim.morepaperlib.MorePaperLib;
 
 public class NLib {
 
@@ -20,6 +21,9 @@ public class NLib {
 
     @Getter
     private static CooldownManager cooldownManager;
+
+    @Getter
+    private static MorePaperLib morePaperLib;
 
     private NLib() {}
 
@@ -37,6 +41,7 @@ public class NLib {
         instance.plugin = plugin;
 
         FastInvManager.register(plugin);
+        morePaperLib = new MorePaperLib(plugin);
 
         cooldownManager = CooldownManager.getInstance();
 
