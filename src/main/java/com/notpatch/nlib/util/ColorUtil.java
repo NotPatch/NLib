@@ -23,7 +23,7 @@ public class ColorUtil {
             matcher = pattern.matcher(message);
         }
 
-        return ChatColor.translateAlternateColorCodes('&', applyPlaceholders(message));
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     public static List<String> getColoredList(List<String> list) {
