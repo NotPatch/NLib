@@ -1,7 +1,6 @@
 package com.notpatch.nlib.util;
 
 import com.notpatch.nlib.NLib;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.List;
@@ -43,14 +42,6 @@ public class ColorUtil {
                     return result;
                 })
                 .collect(Collectors.toList());
-    }
-
-    public static String applyPlaceholders(String text){
-        if(NLib.getInstance().getPlugin().getServer().getPluginManager().getPlugin("PlaceholderAPI") != null){
-            PlaceholderAPI.setPlaceholders(null, text);
-            return text;
-        }
-        return text;
     }
 
 }
