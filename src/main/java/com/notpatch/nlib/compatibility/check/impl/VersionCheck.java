@@ -4,6 +4,8 @@ import com.notpatch.nlib.compatibility.CompatibilityResult;
 import com.notpatch.nlib.compatibility.CompatibilityStatus;
 import com.notpatch.nlib.compatibility.check.CompatibilityCheck;
 import org.bukkit.Bukkit;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class VersionCheck implements CompatibilityCheck {
@@ -74,14 +76,13 @@ public class VersionCheck implements CompatibilityCheck {
     }
 
     private int compareVersions(String version1, String version2) {
-        String[] v1Parts = version1.split("\\.");
-        String[] v2Parts = version2.split("\\.");
+        List<Integer> v1Parts = extractNumericParts(version1);
+        List<Integer> v2Parts = extractNumericParts(version2);
 
-        int maxLength = Math.max(v1Parts.length, v2Parts.length);
-
-        for (int i = 0; i < maxLength; i++) {
-            int v1Part = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
-            int v2Part = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
+        int length = Math.min(v1Parts.size(), v2Parts.size());
+        for (int i = 0; i < length; i++) {
+            int v1Part = v1Parts.get(i);
+            int v2Part = v2Parts.get(i);
 
             if (v1Part != v2Part) {
                 return Integer.compare(v1Part, v2Part);
@@ -91,5 +92,14 @@ public class VersionCheck implements CompatibilityCheck {
         return 0;
     }
 
+    private List<Integer> extractNumericParts(String version) {
+        List<Integer> parts = new ArrayList<>();
+        for (String part : version.split("\\.")) {
+            if (part.matches("\\d+")) {
+                parts.add(Integer.parseInt(part));
+            }
+        }
+        return parts;
+    }
 
 }
